@@ -16,6 +16,20 @@ function handleError(error: any) {
 function initializeSession() {
   const session = OT.initSession(API_KEY, SESSION_ID);
 
+  // Subscribe to a newly created stream
+  session.on("streamCreated", function (event) {
+    session.subscribe(
+      event.stream,
+      "subscriber",
+      {
+        insertMode: "append",
+        width: "100%",
+        height: "100%",
+      },
+      handleError
+    );
+  });
+
   // Create a publisher
   const publisher = OT.initPublisher(
     "publisher",
@@ -42,5 +56,5 @@ export default function Home() {
     initializeSession();
   }, []);
 
-  return <div>Hello World</div>;
+  return <></>;
 }
