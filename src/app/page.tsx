@@ -1,4 +1,39 @@
-import Image from 'next/image'
+import OT from "@opentok/client";
+import Image from "next/image";
+
+const API_KEY = "";
+const SESSION_ID = "";
+const TOKEN = "";
+
+// Handling all of our errors here by alerting them
+function handleError(error: any) {
+  if (!error) return;
+  alert(error.message);
+}
+
+function initializeSession() {
+  const session = OT.initSession(API_KEY, SESSION_ID);
+
+  // Create a publisher
+  const publisher = OT.initPublisher(
+    "publisher",
+    {
+      insertMode: "append",
+      width: "100%",
+      height: "100%",
+    },
+    handleError
+  );
+
+  // Connect to the session
+  session.connect(TOKEN, function (error) {
+    // If the connection is successful, publish to the session
+    if (error) {
+      return handleError(error);
+    }
+    session.publish(publisher, handleError);
+  });
+}
 
 export default function Home() {
   return (
@@ -15,7 +50,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{' '}
+            By{" "}
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
@@ -47,7 +82,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
+            Docs{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
@@ -64,7 +99,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
+            Learn{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
@@ -81,7 +116,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
+            Templates{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
@@ -98,7 +133,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
+            Deploy{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
@@ -109,5 +144,5 @@ export default function Home() {
         </a>
       </div>
     </main>
-  )
+  );
 }
