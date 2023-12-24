@@ -3,9 +3,9 @@
 import OT from "@opentok/client";
 import { useEffect } from "react";
 
-const API_KEY = "";
-const SESSION_ID = "";
-const TOKEN = "";
+const API_KEY = "***";
+const SESSION_ID = "***";
+const TOKEN = "***";
 
 // Handling all of our errors here by alerting them
 function handleError(error: any) {
